@@ -1,0 +1,23 @@
+<html>
+
+<form action="/acceso" method="post">
+    <h2>LOGIN</h2>
+
+    <label>Usuario:</label>
+
+    <input type="text" name="usuario"><br />
+
+    <label>Clave:</label>
+
+    <input type="text" name="clave"><br />
+
+    <input type="submit" value="ACCEDER" />
+
+    
+    {% if error == "SI" %}
+    <h3><p><span style="color: #ff2600;">Nombre de usuario o clave incorrecta</span></p></h3>
+    {% endif %} 
+
+</form>
+
+</html>

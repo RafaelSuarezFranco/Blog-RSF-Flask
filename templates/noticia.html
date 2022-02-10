@@ -1,0 +1,37 @@
+<html>
+    <h1>{{ titular }}</h1>
+    <h2>{{ entrada }}</h2>
+    <h3>{{ id }}</h3>
+
+ 
+
+    <table style="border: 1px solid black; border-collapse: collapse;">
+        <tr>
+            <th>
+                Lista invitados
+            </th>
+        </tr>
+       
+    </table>
+
+
+    <table style="border: 1px solid black; border-collapse: collapse;">
+        <tr>
+            <th>
+                Lista administradores
+            </th>
+        </tr>
+      
+    </table>
+    <form action="http://localhost:5000/alta?error=NO"> <!-- El botón directamente salta a la siguiente pantalla, no hay nada que procesar -->
+        <input type="submit" value="Crear nuevo admin" />
+    </form>
+ 
+
+    <form action="/cerrarsesion" method="post">
+        <input type="submit" value="Cerrar Sesión" />
+    </form>
+
+  
+
+</html>

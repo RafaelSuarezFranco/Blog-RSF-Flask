@@ -1,0 +1,144 @@
+* {
+    box-sizing: border-box;
+}
+
+#cabecera {
+    height: 200px;
+    background-color: bisque;
+    text-align: center;
+    padding-top: 20px;
+}
+
+a {
+    text-decoration: none;
+    display: flex;
+    margin-bottom: 10px;
+    color: rgb(41, 61, 99);
+}
+
+a:hover{
+    color: rgb(89, 147, 255);
+}
+
+#alta div{
+    margin-bottom: 5px;
+}
+#alta div input{
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+#central {
+    background-color: khaki;
+    height: 700px;
+    width: 100vw;
+    padding: 15px;
+    vertical-align: text-top;
+}
+
+#izquierda, #derecha {
+    width: 23%;
+    background-color: rgb(215, 241, 63);
+    padding: 15px;
+    vertical-align: text-top;
+}
+
+#pie {
+    height: 100px;
+    background-color: lavenderblush;
+}
+
+.resaltado {
+    font-weight: bold;
+}
+
+.tablahorarios td, .tablahorarios th {
+   padding: 10px;
+}
+
+.tablahorarios, .tablahorarios tr, .tablahorarios th,.tablahorarios td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+#cabecera table {
+    width: 100%;
+}
+
+#alta h2 {
+    text-align: center;
+}
+
+#th1, #th3 {
+    width: 12%;
+    padding-right: 20px;
+
+}
+#th2{
+    width: 76%;
+}
+
+#calendario, #calendario tr th {
+    
+    width: 50px;
+    border: 5px solid gray;
+    border-collapse: collapse;
+}
+
+.calendario2 {
+    color: white;
+    background-color: rgb(106, 138, 42);
+}
+
+#calendariocentral {
+    background-color: rgb(152, 204, 48);
+    
+    padding: 0;
+
+}
+#calendariocentral p{
+   
+    font-size: 70px;
+    padding: 0;
+    margin: 0;
+
+}
+
+#calendariosuperior h3, #calendarioinferior h3 {
+    padding: 5px;
+    margin: 0;
+
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    border: 1px solid #888;
+    width: 25%;
+    padding: 4px;
+  }
+  
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1;
+    padding-top: 100px; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+  }
+
+h3{
+      padding-left: 10px;
+  }
+
+#alta div span input  {
+      width: 120px;
+      margin-top: 10px;
+      margin-left: calc(50% - 60px);
+      background-color: rgb(0, 90, 87);
+      color: white;
+  }

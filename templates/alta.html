@@ -1,0 +1,42 @@
+<html>
+
+
+    <!-- administradores -->
+    {% if session.administrador == "SI" %}
+
+    <form action="/daralta" method="post">
+        <h2>NUEVO ADMINISTRADOR</h2>
+        <p> {{session.usuario}}, vas a crear un nuevo administrador.</p>
+
+        <label>Usuario Nuevo:</label>
+    
+        <input type="text" name="usuarionuevo"><br />
+    
+        <label>Clave Nueva:</label>
+    
+        <input type="text" name="clavenueva"><br />
+    
+        <input type="submit" value="CREAR" />
+
+        {% if error == "SI" %}
+        <h3><p><span style="color: #ff2600;">Nombre de usuario o clave no pueden estar vacíos</span></p></h3>
+        {% endif %} 
+
+    </form>    
+    
+    {% endif %} 
+
+
+    <!-- usuarios que no deberían estar aquí --> 
+    {% if session.administrador == "NO" %}
+
+        <p> Para dar de alta a un administrador, debes ser un administrador</p>
+    
+
+        <form action="http://localhost:5000/?error=NO"> 
+            <input type="submit" value="Acceder" />
+        </form>
+    {% endif %} 
+
+
+</html>

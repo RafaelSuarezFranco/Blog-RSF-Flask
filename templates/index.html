@@ -2,232 +2,276 @@
 <html>
 
 <head></head>
-<title>Asociación Deportiva Torre del Rey</title>
-<link rel="stylesheet" href="estilos.css">
+<title>Blog de Rafael</title>
+
 <style>
     * {
-    box-sizing: border-box;
-}
+        box-sizing: border-box;
+    }
 
-#cabecera {
-    height: 200px;
-    background-color: bisque;
-    text-align: center;
-    padding-top: 20px;
-}
+    span a {
+        display: inline;
+    }
 
-a {
-    text-decoration: none;
-    display: flex;
-    margin-bottom: 10px;
-    color: rgb(41, 61, 99);
-}
+    #cabecera {
+        height: 200px;
+        background-color: bisque;
+        text-align: center;
+        padding-top: 20px;
+    }
 
-a:hover{
-    color: rgb(89, 147, 255);
-}
+    a {
+        text-decoration: none;
+        display: flex;
+        margin-bottom: 10px;
+        color: rgb(41, 61, 99);
+    }
 
-#alta div{
-    margin-bottom: 5px;
-}
-#alta div input{
-    width: 100%;
-    margin-bottom: 5px;
-}
+    a:hover {
+        color: rgb(89, 147, 255);
+    }
 
-#central {
-    background-color: khaki;
-    height: 700px;
-    width: 100vw;
-    padding: 15px;
-    vertical-align: text-top;
-}
+    #alta div {
+        margin-bottom: 5px;
+    }
 
-#izquierda, #derecha {
-    width: 23%;
-    background-color: rgb(215, 241, 63);
-    padding: 15px;
-    vertical-align: text-top;
-}
+    #alta div input {
+        width: 100%;
+        margin-bottom: 5px;
+    }
 
-#pie {
-    height: 100px;
-    background-color: lavenderblush;
-}
+    #central {
+        background-color: khaki;
+        height: 700px;
+        width: 100vw;
+        padding: 15px;
+        vertical-align: text-top;
+    }
 
-.resaltado {
-    font-weight: bold;
-}
+    #izquierda,
+    #derecha {
+        width: 23%;
+        background-color: rgb(215, 241, 63);
+        padding: 15px;
+        vertical-align: text-top;
+    }
 
-.tablahorarios td, .tablahorarios th {
-   padding: 10px;
-}
+    #pie {
+        height: 100px;
+        background-color: lavenderblush;
+    }
 
-.tablahorarios, .tablahorarios tr, .tablahorarios th,.tablahorarios td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-#cabecera table {
-    width: 100%;
-}
+    .resaltado {
+        font-weight: bold;
+    }
 
-#alta h2 {
-    text-align: center;
-}
+    .tablahorarios td,
+    .tablahorarios th {
+        padding: 10px;
+    }
 
-#th1, #th3 {
-    width: 12%;
-    padding-right: 20px;
+    .tablahorarios,
+    .tablahorarios tr,
+    .tablahorarios th,
+    .tablahorarios td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
 
-}
-#th2{
-    width: 76%;
-}
+    #cabecera table {
+        width: 100%;
+    }
 
-#calendario, #calendario tr th {
-    
-    width: 50px;
-    border: 5px solid gray;
-    border-collapse: collapse;
-}
+    #alta h2 {
+        text-align: center;
+    }
 
-.calendario2 {
-    color: white;
-    background-color: rgb(106, 138, 42);
-}
+    #th1,
+    #th3 {
+        width: 12%;
+        padding-right: 20px;
 
-#calendariocentral {
-    background-color: rgb(152, 204, 48);
-    
-    padding: 0;
+    }
 
-}
-#calendariocentral p{
-   
-    font-size: 70px;
-    padding: 0;
-    margin: 0;
+    #th2 {
+        width: 76%;
+    }
 
-}
+    #calendario,
+    #calendario tr th {
 
-#calendariosuperior h3, #calendarioinferior h3 {
-    padding: 5px;
-    margin: 0;
+        width: 50px;
+        border: 5px solid gray;
+        border-collapse: collapse;
+    }
 
-}
+    .calendario2 {
+        color: white;
+        background-color: rgb(106, 138, 42);
+    }
 
-.modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    border: 1px solid #888;
-    width: 25%;
-    padding: 4px;
-  }
-  
-.modal {
-    display: none; 
-    position: fixed; 
-    z-index: 1;
-    padding-top: 100px; 
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgb(0,0,0); 
-    background-color: rgba(0,0,0,0.4); 
-  }
+    #calendariocentral {
+        background-color: rgb(152, 204, 48);
 
-h3{
-      padding-left: 10px;
-  }
+        padding: 0;
 
-#alta div span input  {
-      width: 120px;
-      margin-top: 10px;
-      margin-left: calc(50% - 60px);
-      background-color: rgb(0, 90, 87);
-      color: white;
-  }
+    }
 
-.noticia {
-    background-color: lightgoldenrodyellow;
-}
+    #calendariocentral p {
 
+        font-size: 70px;
+        padding: 0;
+        margin: 0;
+
+    }
+
+    #calendariosuperior h3,
+    #calendarioinferior h3 {
+        padding: 5px;
+        margin: 0;
+
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        border: 1px solid #888;
+        width: 25%;
+        padding: 4px;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        padding-top: 100px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    h3 {
+        padding-left: 10px;
+    }
+
+    #alta div span input {
+        width: 120px;
+        margin-top: 10px;
+        margin-left: calc(50% - 60px);
+        background-color: rgb(0, 90, 87);
+        color: white;
+    }
+
+    .noticia {
+        background-color: lightgoldenrodyellow;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
 </style>
+
 <body>
 
-	<div id="cabecera">
+    <div id="cabecera">
         <table>
-			<tr id="rowcabecera">
-				<th id="th1">
+            <tr id="rowcabecera">
+                <th id="th1">
 
-				</th>
-				<th id="th2">
-					<h1>Blog Personal de Rafael Suárez Franco en Flask</h1>
-				</th>
-				<th id="th3">
-					<table id="calendario">
-						<tr>
-							<th id="calendariosuperior" class="calendario2">
-								<h3>Perfil</h3>
-							</th>
-						</tr>
-						<tr>
-							<th id="calendariocentral">
-								<h3>Invitado</h3>
-							</th>
-						</tr>
-						<tr>
-							<th id="calendarioinferior" class="calendario2">
+                </th>
+                <th id="th2">
+                    <h1>Blog Personal de Rafael Suárez Franco en Flask</h1>
+                </th>
+                <th id="th3">
+                    <table id="calendario">
+                        <tr>
+                            <th id="calendariosuperior" class="calendario2">
+                                <h3>Perfil</h3>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th id="calendariocentral">
+                                {% if session["administrador"] == "SI" %}
+                                <h3>Administrador</h3>
+                                {% endif %}
+                                {% if session["administrador"] == "NO" %}
+                                <h3>Invitado</h3>
+                                {% endif %}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th id="calendarioinferior" class="calendario2">
+
+
+                                {% if session["administrador"] == "SI" %}
+                                <form action="/logout" method="post">
+                                    <input type="submit" value="LOG OUT" />
+                                </form>
+                                {% endif %}
+                                {% if session["administrador"] == "NO" %}
                                 <form action="/login" method="post">
                                     <input type="submit" value="LOG IN" />
                                 </form>
-							</th>
-						</tr>
-					</table>
-				</th>
-			</tr>
+                                {% endif %}
 
-		</table>
-	</div>
-	<div id="principal">
-		<table>
-			<tr>
-				<td id="izquierda">
-					<h3>Titulares</h3>
-					<ul>
-						{% for i in listaid %}
-                            <li>
-                                <a href="/noticia?id={{i}}&titular={{titulares[i]}}&entrada={{entradas[i]}}">{{titulares[i]}}</a>
-                            </li>
+
+                            </th>
+                        </tr>
+                    </table>
+                </th>
+            </tr>
+
+        </table>
+    </div>
+    <div id="principal">
+        <table>
+            <tr>
+                <td id="izquierda">
+                    <h3>Titulares</h3>
+                    <ul>
+                        {% for i in listaid %}
+                        <li>
+                            <a href="/noticia?id={{i}}">{{titulares[i]}}</a>
+                        </li>
 
                         {% endfor %}
 
-					</ul>
-				</td>
-				<td id="central">
+                    </ul>
+                </td>
+                <td id="central">
                     <h1>Noticias</h1>
                     {% for i in listaid %}
                     <div class="noticia">
                         <h2>{{ titulares[i] }}</h2>
-                        <p>{{ entradas[i] }}</p>
+                        <p>{{ entradas[i]|safe }}</p>
+                        {% if session["administrador"] == "SI" %}
+                        <span><a href="/editarnoticia?id={{i}}">Modificar</a> /
+                            <a href="/eliminarnoticia?id={{i}}">Eliminar</a></span>
+                        {% endif %}
                     </div>
 
-                {% endfor %}
+                    {% endfor %}
+                    
+                    {% if session["administrador"] == "SI" %}
+                    <form method="post" action="crearnoticia">
+                        <input type="submit" value="Nueva Noticia" />
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="pie">
 
-				</td>
-			</tr>
-		</table>
-	</div>
-	<div id="pie">
-		
 
 
-	</div>
+    </div>
 
 
 
 
 </body>
+
 </html>

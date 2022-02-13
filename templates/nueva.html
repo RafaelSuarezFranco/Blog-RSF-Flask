@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<title>
+		{% if modo == "creacion" %}
+		Nueva Noticia
+		{% endif %}
+		{% if modo == "edicion" %}
+		Editar Noticia
+		{% endif %}
+
+	</title>
+	<style>
+		body {
+			background-color: rgb(248, 244, 185);
+		}
+	</style>
+</head>
+
+<body>
+	<div style="margin-left: 40px; margin-right: 40px;">
+		<h1>
+			{% if modo == "creacion" %}
+			Crear Nueva Noticia
+			{% endif %}
+			{% if modo == "edicion" %}
+			Editar Noticia
+			{% endif %}
+		</h1>
+		{% if modo == "creacion" %}
+		<form action="nuevanoticia" method="post">
+			<label for="titulo">Título:</label><br>
+			<input type="text" name="titulo"><br><br>
+			<label for="ckeditor">Cuerpo:</label>
+			{{ ckeditor.create() }}<br>
+			<input type="submit" value="Publicar">
+		</form>
+	
+	{{ ckeditor.load() }}
+	{{ ckeditor.config() }}
+	{% endif %}
+
+
+	{% if modo == "edicion" %}
+	<form action="noticiaeditada" method="post">
+		<label for="titulo">Título:</label><br>
+		<input type="text" name="titulo" value="{{ titulares[indice] }}"><br><br>
+		<label for="ckeditor">Cuerpo:</label>
+		{{ ckeditor.create(value=entradas[indice]) }}<br>
+		<input type="submit" value="Guardar Cambios">
+		<input type="hidden" name="indice" value="{{ indice }}">
+	</form>
+
+{{ ckeditor.load() }}
+{{ ckeditor.config() }}
+	{% endif %}
+</div>
+
+</body>
+
+</html>

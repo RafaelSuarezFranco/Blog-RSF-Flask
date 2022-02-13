@@ -1,37 +1,35 @@
-<html>
-    <h1>{{ titular }}</h1>
-    <h2>{{ entrada }}</h2>
-    <h3>{{ id }}</h3>
+<!DOCTYPE html>
+<html lang="en">
 
- 
+<head>
+    <meta charset="UTF-8">
+    <title>{{ titular }}</title>
+    <style>
+        
+        body {
+            background-color: khaki;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
 
-    <table style="border: 1px solid black; border-collapse: collapse;">
-        <tr>
-            <th>
-                Lista invitados
-            </th>
-        </tr>
-       
-    </table>
+        #central {
+            background-color: rgb(248, 244, 185);
+            padding: 15px;
+            vertical-align: text-top;
+        }
+        #pie {
+            margin-top: 40px;
+        }
+    </style>
+</head>
 
+<body>
+    <div id="titular">
+        <h1>{{ titular }}</h1>
+    </div>
+    <div id="central">{{ entrada|safe }}</div>
 
-    <table style="border: 1px solid black; border-collapse: collapse;">
-        <tr>
-            <th>
-                Lista administradores
-            </th>
-        </tr>
-      
-    </table>
-    <form action="http://localhost:5000/alta?error=NO"> <!-- El botón directamente salta a la siguiente pantalla, no hay nada que procesar -->
-        <input type="submit" value="Crear nuevo admin" />
-    </form>
- 
-
-    <form action="/cerrarsesion" method="post">
-        <input type="submit" value="Cerrar Sesión" />
-    </form>
-
-  
+    <div id="pie"><a href="/">Volver a la página principal</a></div>
+</body>
 
 </html>

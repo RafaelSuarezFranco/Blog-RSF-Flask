@@ -1,123 +1,130 @@
-from flask import Flask
-from flask import render_template
-from flask import request
-from flask import session
+from flask import Flask, render_template, request, session
+from flask_ckeditor import CKEditor
 
 app = Flask(__name__)
 app.secret_key = 'app secret key'
 
-listaadmin = ["juan", "lolo"]
-listaadminclave = ["123", "abc"]
-listainvitado = ["pepe", "alonso"]
-listainvitadoclave = ["pepepe", "alonso1"]
+#configurar ckeditor
+app.config['CKEDITOR_SERVE_LOCAL'] = True
+app.config['CKEDITOR_HEIGHT'] = 400
+#app.config['CKEDITOR_WIDTH'] = 1000
+ckeditor = CKEditor(app)
 
 listaid=[0, 1]
 titulares=["Titular 1", "Titular 2"]
 entradas=["Cuerpo 1", "Cuerpo 2"]
 
+
 @app.route("/")
 def raiz():
+    #en un principio no somos admin.
+    if session["administrador"] != "SI":
+        session["administrador"]="NO"
     return render_template('index.html', titulares=titulares, entradas=entradas, listaid=listaid)
 
-
+#visualizar una noticia
 @app.route('/noticia')
 def noticia():
-    id = request.args.get('id')
-    titular = request.args.get('titular')
-    entrada = request.args.get('entrada')
+    id = int(request.args.get('id'))
+    #indice = listaid.index(id)
+    titular = titulares[id]
+    entrada = entradas[id]
+    return render_template("noticia.html", titular=titular, entrada=entrada)  
 
-    return render_template("noticia.html" ,id=id,titular=titular, entrada=entrada)  
 
-
-
-@app.route('/login')
+#entrar en la pg de login
+@app.route('/login', methods=["POST"])
 def login():
     error = "NO"
     return render_template("login.html" ,error=error)  
 
-
-
-
-@app.route("/login",methods=["POST"])
-def acceder():
-    #session["administrador"]="NO"
-    error = "NO"
-    return render_template("login.html" ,error=error)
-
-
-
-
-@app.route("/acceso",methods=["POST"])
-def acceso():
+#logearse como admin
+@app.route("/acceder",methods=["POST"])
+def accederadmin():
     usuario = request.form.get('usuario')
     clave = request.form.get('clave')
-    session["usuario"]=usuario
-    session["administrador"]="NO"
-    error = "NO"
-    usuarioexiste = False
-    clavecorrecta = False
 
-    if usuario == "" or clave == "":
-        return render_template("index.html" ,error="SI")
+    if usuario == "admin" and clave == "password":
+        session["administrador"]="SI"
+        return render_template('index.html', titulares=titulares, entradas=entradas, listaid=listaid)
     else:
-        #comprobar si es admin
-        contador = 0
-        for u in listaadmin:
-    
-            if usuario == u:
-                usuarioexiste = True
-                if listaadminclave[contador] == clave:
-                    print("administrador ok")
-                    clavecorrecta = True
-                    session["administrador"]="SI"
-            contador = contador + 1
-        
-        contador = 0
-        if usuarioexiste == False: #si no es admin, comprobamos si es invitado
-            for u in listainvitado:
-                
-                if usuario == u:
-                    usuarioexiste = True
-                    if listainvitadoclave[contador] == clave:
-                        print("invitado ok")
-                        clavecorrecta = True
-                        session["administrador"]="NO"
-                contador = contador + 1
-        
-        if usuarioexiste == False or clavecorrecta == False:
-            return render_template("index.html" ,error="SI")
-        else:
-            return render_template("ver.html", listainvitado=listainvitado, listaadmin=listaadmin)    
-    
+        return render_template("login.html" ,error="SI") 
 
-
-@app.route('/alta')
-def alta():
-    error = "NO"
-    return render_template("alta.html" ,error=error)  
-    
-
-
-@app.route("/daralta",methods=["POST"])
-def daralta():
-    usuarionuevo = request.form.get("usuarionuevo")
-    clavenueva = request.form.get("clavenueva")
-    error = "NO"
-
-    if usuarionuevo == "" or clavenueva == "":
-        return render_template('alta.html', error="SI")       
-    else:
-        listaadmin.append(usuarionuevo)
-        listaadminclave.append(clavenueva)
-        return render_template("ver.html" , listainvitado=listainvitado, listaadmin=listaadmin) 
-      
-
-@app.route("/cerrarsesion",methods=["POST"])
-def cerrarsesion():
+#cerrar sesión de admin
+@app.route('/logout', methods=["POST"])
+def logout():
     session["administrador"]="NO"
-    error = "NO"
-    return render_template("index.html" ,error=error)
-   
+    return render_template('index.html', titulares=titulares, entradas=entradas, listaid=listaid)  
+
+#crear nueva noticia
+@app.route('/nueva')
+def nueva():
+    if session["administrador"] == "SI":
+        return render_template("nueva.html", indice="ninguno", modo="creacion", titulares=titulares, entradas=entradas)
+    else:
+        return render_template("erroradmin.html")
+
+#ir a la pg de creación de noticia. Crear o editar noticia es la misma página
+@app.route("/crearnoticia", methods=["POST"])
+def crearnoticia():
+    if session["administrador"] == "SI":
+        return render_template("nueva.html", indice="ninguno", modo="creacion", titulares=titulares, entradas=entradas)
+    else:
+        return render_template("erroradmin.html")
+
+#método del form de crear noticia.
+@app.route('/nuevanoticia', methods=['POST'])
+def crearnueva():
+    titulo = request.form.get('titulo')
+    cuerpo = request.form.get('ckeditor')
+    ultimoid = 0
+    try: # en caso de que borremos todas las noticias, esto puede causar problemas
+        ultimoid = listaid[-1]
+    except Exception:
+        ultimoid = -1
+    nuevoid = ultimoid + 1
+    listaid.append(nuevoid)
+    titulares.append(titulo)
+    entradas.append(cuerpo)
+    return render_template('index.html', titulares=titulares, entradas=entradas, listaid=listaid)
+
+
+#ir a la pantalla de edición de noticia
+@app.route("/editarnoticia")
+def editarnoticia():
+    id = int(request.args.get('id'))
+    indice = listaid.index(id)
+    if session["administrador"] == "SI":
+        return render_template("nueva.html", indice=indice, modo="edicion", titulares=titulares, entradas=entradas)
+    else:
+        return render_template("erroradmin.html")
+
+#editar una noticia
+@app.route('/noticiaeditada', methods=['POST'])
+def noticiaeditada():
+    titulo = request.form.get('titulo')
+    cuerpo = request.form.get('ckeditor')
+    indice = int(request.form.get('indice'))
+    titulares[indice] = titulo
+    entradas[indice] = cuerpo
+    return render_template('index.html', titulares=titulares, entradas=entradas, listaid=listaid)
+
+#eliminar una noticia
+@app.route("/eliminarnoticia")
+def eliminarnoticia():
+    id = int(request.args.get('id'))
+    
+    if session["administrador"] == "SI":
+        titulares.pop(id)
+        entradas.pop(id)
+        global listaid
+        listaid = list(range(0, len(titulares)))
+        return render_template('index.html', titulares=titulares, entradas=entradas, listaid=listaid)
+    else:
+        return render_template("erroradmin.html")
+
+ 
+
 
 @app.errorhandler(404)
 def page_not_found(error):

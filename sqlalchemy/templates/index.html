@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+
+<head></head>
+<title>Blog de Rafael</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    span a {
+        display: inline;
+    }
+
+    #cabecera {
+        height: 200px;
+        background-color: bisque;
+        text-align: center;
+        padding-top: 20px;
+    }
+
+    a {
+        text-decoration: none;
+        display: flex;
+        margin-bottom: 10px;
+        color: rgb(41, 61, 99);
+    }
+
+    a:hover {
+        color: rgb(89, 147, 255);
+    }
+
+    #alta div {
+        margin-bottom: 5px;
+    }
+
+    #alta div input {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    #central {
+        background-color: khaki;
+        height: 700px;
+        width: 100vw;
+        padding: 15px;
+        vertical-align: text-top;
+    }
+
+    #izquierda,
+    #derecha {
+        width: 23%;
+        background-color: rgb(215, 241, 63);
+        padding: 15px;
+        vertical-align: text-top;
+    }
+
+    #pie {
+        height: 100px;
+        background-color: lavenderblush;
+    }
+
+
+    #cabecera table {
+        width: 100%;
+    }
+
+    #alta h2 {
+        text-align: center;
+    }
+
+    #th1,
+    #th3 {
+        width: 12%;
+        padding-right: 20px;
+
+    }
+
+    #th2 {
+        width: 76%;
+    }
+
+    #cuadroverde,
+    #cuadroverde tr th {
+
+        width: 50px;
+        border: 5px solid gray;
+        border-collapse: collapse;
+    }
+
+    .cuadroverde2 {
+        color: white;
+        background-color: rgb(106, 138, 42);
+    }
+
+    #cuadroverdecentral {
+        background-color: rgb(152, 204, 48);
+
+        padding: 0;
+
+    }
+
+    #cuadroverdecentral p {
+
+        font-size: 70px;
+        padding: 0;
+        margin: 0;
+
+    }
+
+    #cuadroverdesuperior h3,
+    #cuadroverdeinferior h3 {
+        padding: 5px;
+        margin: 0;
+
+    }
+
+    h3 {
+        padding-left: 10px;
+    }
+
+    #alta div span input {
+        width: 120px;
+        margin-top: 10px;
+        margin-left: calc(50% - 60px);
+        background-color: rgb(0, 90, 87);
+        color: white;
+    }
+
+    .noticia {
+        background-color: lightgoldenrodyellow;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 10px;
+        padding-top: 1px;
+        margin-bottom: 20px;
+    }
+
+    .noticiatitular {
+        background-color: rgb(229, 229, 149);
+        margin-top: 10px;
+        padding-left: 10px;
+    }
+
+    #izquierda div {
+        position: -webkit-sticky;
+        position: sticky;
+        left: 20px;
+        top: 10px;
+    }
+</style>
+
+<body>
+
+    <div id="cabecera">
+        <table>
+            <tr id="rowcabecera">
+                <th id="th1">
+
+                </th>
+                <th id="th2">
+                    <h1>Blog Personal de Rafael Suárez Franco en Flask</h1>
+                </th>
+                <th id="th3">
+                    <table id="cuadroverde">
+                        <tr>
+                            <th id="cuadroverdesuperior" class="cuadroverde2">
+                                <h3>Perfil</h3>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th id="cuadroverdecentral">
+                                {% if session["administrador"] == "SI" %}
+                                <h3>Administrador</h3>
+                                {% endif %}
+                                {% if session["administrador"] == "NO" %}
+                                <h3>Invitado</h3>
+                                {% endif %}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th id="cuadroverdeinferior" class="cuadroverde2">
+
+
+                                {% if session["administrador"] == "SI" %}
+                                <form action="/logout" method="post">
+                                    <input type="submit" value="LOG OUT" />
+                                </form>
+                                {% endif %}
+                                {% if session["administrador"] == "NO" %}
+                                <form action="/login" method="post">
+                                    <input type="submit" value="LOG IN" />
+                                </form>
+                                {% endif %}
+
+
+                            </th>
+                        </tr>
+                    </table>
+                </th>
+            </tr>
+
+        </table>
+    </div>
+    <div id="principal">
+        <table>
+            <tr>
+                <td id="izquierda">
+                    <div>
+                        <h3>Titulares</h3>
+                        <ul>
+                            {% for noticia in noticias %}
+                            <li>
+                                <a href="/noticia?id={{ noticia.id }}">{{ noticia.titulo }}</a>
+                            </li>
+
+                            {% endfor %}
+
+                        </ul>
+                    </div>
+                </td>
+                <td id="central">
+                    <h1>Noticias</h1>
+                    {% for noticia in noticias %}
+                    <div class="noticia">
+                        <div class="noticiatitular">
+                            <h2>{{ noticia.titulo }}</h2>
+                        </div>
+                        <p>{{ noticia.cuerpo|safe }}</p>
+                        {% if session["administrador"] == "SI" %}
+                        <span><a href="/editarnoticia?id={{ noticia.id }}">Modificar</a> /
+                            <a href="/eliminarnoticia?id={{ noticia.id }}">Eliminar</a></span>
+                        {% endif %}
+                    </div>
+
+                    {% endfor %}
+
+                    {% if session["administrador"] == "SI" %}
+                    <form method="post" action="crearnoticia">
+                        <input type="submit" value="Nueva Noticia" />
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="pie">
+
+
+
+    </div>
+
+
+
+
+</body>
+
+</html>

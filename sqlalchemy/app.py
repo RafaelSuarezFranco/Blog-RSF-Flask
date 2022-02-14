@@ -1,9 +1,11 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, redirect
 from flask_ckeditor import CKEditor
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.secret_key = 'app secret key'
+app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///noticias.sqlite3'
+app.config ['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 #configurar ckeditor
 app.config['CKEDITOR_SERVE_LOCAL'] = True
@@ -11,11 +13,23 @@ app.config['CKEDITOR_HEIGHT'] = 400
 #app.config['CKEDITOR_WIDTH'] = 1000
 ckeditor = CKEditor(app)
 
-listaid=[0, 1]
-titulares=["Titular 1", "Titular 2"]
-entradas=["Cuerpo 1", "Cuerpo 2"]
+db = SQLAlchemy(app)
 
+class Noticia(db.Model):
+    __tablename__ = 'noticias'
+    id = db.Column(db.Integer, primary_key = True)
+    titulo = db.Column(db.String(100))
+    cuerpo = db.Column(db.String(250))
 
+def __init__(self, titulo, cuerpo):
+    self.titulo = titulo
+    self.cuerpo = cuerpo
+
+db.create_all()
+
+#prueba = Noticia(titulo='Titular 1 sql', cuerpo='Cuerpo 1 de sqsl')
+#db.session.add(prueba)
+#db.session.commit()
 
 @app.route("/")
 def raiz():
@@ -25,16 +39,14 @@ def raiz():
 
     #if session["administrador"] != "SI":
     #    session["administrador"]="NO"
-    return render_template('index.html', titulares=titulares, entradas=entradas, listaid=listaid)
+    return render_template('index.html', noticias = Noticia.query.all())
 
 #visualizar una noticia
 @app.route('/noticia')
 def noticia():
     id = int(request.args.get('id'))
-    #indice = listaid.index(id)
-    titular = titulares[id]
-    entrada = entradas[id]
-    return render_template("noticia.html", titular=titular, entrada=entrada)  
+    noticia1 = Noticia.query.filter_by(id=id).first()
+    return render_template("noticia.html", noticia=noticia1)  
 
 
 #entrar en la pg de login
@@ -51,7 +63,8 @@ def accederadmin():
 
     if usuario == "admin" and clave == "password":
         session["administrador"]="SI"
-        return render_template('index.html', titulares=titulares, entradas=entradas, listaid=listaid)
+        return redirect('/')
+        #return render_template('index.html', noticias = Noticia.query.all()) 
     else:
         return render_template("login.html" ,error="SI") 
 
@@ -59,13 +72,14 @@ def accederadmin():
 @app.route('/logout', methods=["POST"])
 def logout():
     session["administrador"]="NO"
-    return render_template('index.html', titulares=titulares, entradas=entradas, listaid=listaid)  
+    return redirect('/')
+    #return render_template('index.html', noticias = Noticia.query.all()) 
 
 #crear nueva noticia
 @app.route('/nueva')
 def nueva():
     if session["administrador"] == "SI":
-        return render_template("nueva.html", indice="ninguno", modo="creacion", titulares=titulares, entradas=entradas)
+        return render_template("nueva.html", modo="creacion", noticia = None)
     else:
         return render_template("erroradmin.html")
 
@@ -73,7 +87,7 @@ def nueva():
 @app.route("/crearnoticia", methods=["POST"])
 def crearnoticia():
     if session["administrador"] == "SI":
-        return render_template("nueva.html", indice="ninguno", modo="creacion", titulares=titulares, entradas=entradas)
+        return render_template("nueva.html", modo="creacion", noticia = None)
     else:
         return render_template("erroradmin.html")
 
@@ -82,25 +96,24 @@ def crearnoticia():
 def crearnueva():
     titulo = request.form.get('titulo')
     cuerpo = request.form.get('ckeditor')
-    ultimoid = 0
-    try: # en caso de que borremos todas las noticias, esto puede causar problemas
-        ultimoid = listaid[-1]
-    except Exception:
-        ultimoid = -1
-    nuevoid = ultimoid + 1
-    listaid.append(nuevoid)
-    titulares.append(titulo)
-    entradas.append(cuerpo)
-    return render_template('index.html', titulares=titulares, entradas=entradas, listaid=listaid)
+    
+    nuevanoticia = Noticia(titulo=titulo, cuerpo=cuerpo)
+    db.session.add(nuevanoticia)
+    db.session.commit()
+
+    return redirect('/')
+    #return render_template('index.html', noticias = Noticia.query.all()) 
 
 
 #ir a la pantalla de edición de noticia
 @app.route("/editarnoticia")
 def editarnoticia():
     id = int(request.args.get('id'))
-    indice = listaid.index(id)
+
+    noticia1 = Noticia.query.filter_by(id=id).first()
+    
     if session["administrador"] == "SI":
-        return render_template("nueva.html", indice=indice, modo="edicion", titulares=titulares, entradas=entradas)
+        return render_template("nueva.html", modo="edicion",  noticia = noticia1)
     else:
         return render_template("erroradmin.html")
 
@@ -109,10 +122,15 @@ def editarnoticia():
 def noticiaeditada():
     titulo = request.form.get('titulo')
     cuerpo = request.form.get('ckeditor')
-    indice = int(request.form.get('indice'))
-    titulares[indice] = titulo
-    entradas[indice] = cuerpo
-    return render_template('index.html', titulares=titulares, entradas=entradas, listaid=listaid)
+    idnoticia = int(request.form.get('id'))
+
+    noticia1 = Noticia.query.filter_by(id=idnoticia).first()
+    noticia1.titulo = titulo
+    noticia1.cuerpo = cuerpo
+    db.session.commit()
+
+    return redirect('/')
+    #return render_template('index.html', noticias = Noticia.query.all()) 
 
 #eliminar una noticia
 @app.route("/eliminarnoticia")
@@ -120,11 +138,12 @@ def eliminarnoticia():
     id = int(request.args.get('id'))
     
     if session["administrador"] == "SI":
-        titulares.pop(id)
-        entradas.pop(id)
-        global listaid
-        listaid = list(range(0, len(titulares)))
-        return render_template('index.html', titulares=titulares, entradas=entradas, listaid=listaid)
+        noticia1 = Noticia.query.filter_by(id=id).first()
+        db.session.delete(noticia1)
+        db.session.commit()
+ 
+        return redirect('/')
+        #return render_template('index.html', noticias = Noticia.query.all()) 
     else:
         return render_template("erroradmin.html")
 

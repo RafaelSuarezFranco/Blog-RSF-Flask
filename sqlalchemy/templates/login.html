@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Log In</title>
+    <style>
+            
+        body {
+            background-color: rgb(248, 244, 185);
+            text-align: center;
+            margin: auto;
+        }
+        input,
+        label {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="/acceder" method="post">
+        <h2>LOG IN</h2>
+
+        <label>Usuario:</label>
+
+        <input type="text" name="usuario"><br />
+
+        <label>Clave:</label>
+
+        <input type="password" name="clave"><br />
+
+        <input type="submit" value="ACCEDER" /><br />
+
+
+        {% if error == "SI" %}
+        <h3>
+            <p><span style="color: #ff2600;">Nombre de usuario o clave incorrecta</span></p>
+        </h3>
+        {% endif %}
+
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ titular }}</title>
+    <style>
+        
+        body {
+            background-color: khaki;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        #central {
+            background-color: rgb(248, 244, 185);
+            padding: 15px;
+            vertical-align: text-top;
+        }
+        #pie {
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="titular">
+        <h1>{{ noticia.titulo }}</h1>
+    </div>
+    <div id="central">{{ noticia.cuerpo|safe }}</div>
+
+    <div id="pie"><a href="/">Volver a la página principal</a></div>
+</body>
+
+</html>

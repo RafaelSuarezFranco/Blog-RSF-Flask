@@ -36,9 +36,6 @@ def raiz():
     #en un principio no somos admin.
     if 'administrador' not in session:
       session['administrador'] = "NO"
-
-    #if session["administrador"] != "SI":
-    #    session["administrador"]="NO"
     return render_template('index.html', noticias = Noticia.query.all())
 
 #visualizar una noticia
@@ -79,7 +76,7 @@ def logout():
 @app.route('/nueva')
 def nueva():
     if session["administrador"] == "SI":
-        return render_template("nueva.html", modo="creacion", noticia = None)
+        return render_template("nueva.html", error="NO", modo="creacion", noticia = None)
     else:
         return render_template("erroradmin.html")
 
@@ -87,7 +84,7 @@ def nueva():
 @app.route("/crearnoticia", methods=["POST"])
 def crearnoticia():
     if session["administrador"] == "SI":
-        return render_template("nueva.html", modo="creacion", noticia = None)
+        return render_template("nueva.html", error="NO" , modo="creacion", noticia = None)
     else:
         return render_template("erroradmin.html")
 
@@ -96,13 +93,15 @@ def crearnoticia():
 def crearnueva():
     titulo = request.form.get('titulo')
     cuerpo = request.form.get('ckeditor')
-    
-    nuevanoticia = Noticia(titulo=titulo, cuerpo=cuerpo)
-    db.session.add(nuevanoticia)
-    db.session.commit()
+    if titulo == "" or cuerpo == "":
+        return render_template("nueva.html", error="SI" , modo="creacion", noticia = None)
+    else:
+        nuevanoticia = Noticia(titulo=titulo, cuerpo=cuerpo)
+        db.session.add(nuevanoticia)
+        db.session.commit()
 
-    return redirect('/')
-    #return render_template('index.html', noticias = Noticia.query.all()) 
+        return redirect('/')
+        #return render_template('index.html', noticias = Noticia.query.all()) 
 
 
 #ir a la pantalla de edición de noticia
@@ -113,7 +112,7 @@ def editarnoticia():
     noticia1 = Noticia.query.filter_by(id=id).first()
     
     if session["administrador"] == "SI":
-        return render_template("nueva.html", modo="edicion",  noticia = noticia1)
+        return render_template("nueva.html", error="NO", modo="edicion",  noticia = noticia1)
     else:
         return render_template("erroradmin.html")
 
@@ -123,14 +122,16 @@ def noticiaeditada():
     titulo = request.form.get('titulo')
     cuerpo = request.form.get('ckeditor')
     idnoticia = int(request.form.get('id'))
-
     noticia1 = Noticia.query.filter_by(id=idnoticia).first()
-    noticia1.titulo = titulo
-    noticia1.cuerpo = cuerpo
-    db.session.commit()
+    if titulo == "" or cuerpo == "":
+        return render_template("nueva.html", error="SI" , modo="edicion", noticia = noticia1)
+    else:
+        noticia1.titulo = titulo
+        noticia1.cuerpo = cuerpo
+        db.session.commit()
 
-    return redirect('/')
-    #return render_template('index.html', noticias = Noticia.query.all()) 
+        return redirect('/')
+        #return render_template('index.html', noticias = Noticia.query.all()) 
 
 #eliminar una noticia
 @app.route("/eliminarnoticia")

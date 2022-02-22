@@ -12,10 +12,18 @@
 		{% endif %}
 
 	</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
+integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
 	<style>
 		body {
 			background-color: rgb(248, 244, 185);
 		}
+		#error {
+            width: 500px;
+            margin: 10px;
+        
+        }
 	</style>
 </head>
 
@@ -35,7 +43,7 @@
 			<input type="text" name="titulo"><br><br>
 			<label for="ckeditor">Cuerpo:</label>
 			{{ ckeditor.create() }}<br>
-			<input type="submit" value="Publicar">
+			<input  class="btn btn-outline-dark" type="submit" value="Publicar">
 		</form>
 
 		{{ ckeditor.load() }}
@@ -49,7 +57,7 @@
 			<input type="text" name="titulo" value="{{ noticia.titulo }}"><br><br>
 			<label for="ckeditor">Cuerpo:</label>
 			{{ ckeditor.create(value=noticia.cuerpo) }}<br>
-			<input type="submit" value="Guardar Cambios">
+			<input  class="btn btn-outline-dark" type="submit" value="Guardar Cambios">
 			<input type="hidden" name="id" value="{{ noticia.id }}">
 		</form>
 
@@ -59,9 +67,11 @@
 	</div>
 
 	{% if error == "SI" %}
-	<h3>
+	<div id="error" class="alert alert-dismissible alert-danger">
+	
 		<p><span style="color: #ff2600;">El título y el cuerpo no pueden estar vacíos</span></p>
-	</h3>
+	
+	</div>
 	{% endif %}
 
 </body>

@@ -85,25 +85,27 @@
     #cuadroverde tr th {
 
         width: 50px;
-        border: 5px solid gray;
+      
         border-collapse: collapse;
+        padding: 4px;
     }
 
     .cuadroverde2 {
         color: white;
-        background-color: rgb(106, 138, 42);
+        background-color: rgb(216, 233, 181);
     }
 
     #cuadroverdecentral {
         background-color: rgb(152, 204, 48);
-
+        width: 100%;
         padding: 0;
 
     }
 
-    #cuadroverdecentral p {
-
-        font-size: 70px;
+    #cuadroverdecentral h3 {
+        display: inline-block;
+        font-size: 33px;
+        width: 230px;
         padding: 0;
         margin: 0;
 
@@ -150,7 +152,8 @@
         top: 10px;
     }
 </style>
-
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
+integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <body>
 
     <div id="cabecera">
@@ -163,10 +166,10 @@
                     <h1>Blog Personal de Rafael Suárez Franco en Flask</h1>
                 </th>
                 <th id="th3">
-                    <table id="cuadroverde">
+                    <table class="card text-white bg-success mb-3" id="cuadroverde"><!--id="cuadroverde"-->
                         <tr>
-                            <th id="cuadroverdesuperior" class="cuadroverde2">
-                                <h3>Perfil</h3>
+                            <th  ><!-- id="cuadroverdesuperior" class="cuadroverde2"-->
+                                <h3>Perfil:</h3>
                             </th>
                         </tr>
                         <tr>
@@ -185,12 +188,12 @@
 
                                 {% if session["administrador"] == "SI" %}
                                 <form action="/logout" method="post">
-                                    <input type="submit" value="LOG OUT" />
+                                    <input  class="btn btn-outline-danger" type="submit" value="LOG OUT" />
                                 </form>
                                 {% endif %}
                                 {% if session["administrador"] == "NO" %}
-                                <form action="/login" method="post">
-                                    <input type="submit" value="LOG IN" />
+                                <form  action="/login" method="post">
+                                    <input class="btn btn-outline-success" type="submit" value="LOG IN" />
                                 </form>
                                 {% endif %}
 
@@ -229,8 +232,8 @@
                         </div>
                         <p>{{ noticia.cuerpo|safe }}</p>
                         {% if session["administrador"] == "SI" %}
-                        <span><a href="/editarnoticia?id={{ noticia.id }}">Modificar</a> /
-                            <a href="/eliminarnoticia?id={{ noticia.id }}">Eliminar</a></span>
+                        <span><a class="btn btn-primary" href="/editarnoticia?id={{ noticia.id }}">Modificar</a>
+                            <a class="btn btn-danger" href="/eliminarnoticia?id={{ noticia.id }}">Eliminar</a></span>
                         {% endif %}
                     </div>
 
@@ -238,7 +241,7 @@
 
                     {% if session["administrador"] == "SI" %}
                     <form method="post" action="crearnoticia">
-                        <input type="submit" value="Nueva Noticia" />
+                        <input class="btn btn-success" type="submit" value="Nueva Noticia" />
                     </form>
                     {% endif %}
                 </td>

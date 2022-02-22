@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Log In</title>
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <style>
             
         body {
@@ -15,31 +18,51 @@
         label {
             margin-bottom: 10px;
         }
+        form {
+            width: 300px;
+            text-align: center;
+            margin: auto;
+        }
+
+        #error {
+            width: 500px;
+            text-align: center;
+            margin: auto;
+        
+        }
+        #cabecerah2 {
+            font-size: 40px;
+            color: white;
+            padding: 10px;
+        }
+
     </style>
 </head>
 
 <body>
     <form action="/acceder" method="post">
-        <h2>LOG IN</h2>
+        <br/>
+        <h2 id="cabecerah2" class="badge rounded-pill bg-primary" >LOG IN</h2>
+        <br/>
+        <label class="form-label mt-4">Usuario:</label><br/>
+        
+        <input class="form-control" type="text" name="usuario">
 
-        <label>Usuario:</label>
+        <label class="form-label mt-4">Clave:</label><br/>
 
-        <input type="text" name="usuario"><br />
+        <input class="form-control" type="password" name="clave"><br />
 
-        <label>Clave:</label>
+        <input class="btn btn-primary" type="submit" value="ACCEDER" /><br />
 
-        <input type="password" name="clave"><br />
+        
+    </form>
 
-        <input type="submit" value="ACCEDER" /><br />
-
-
-        {% if error == "SI" %}
-        <h3>
+    {% if error == "SI" %}
+        <div id="error" class="alert alert-dismissible alert-danger">
             <p><span style="color: #ff2600;">Nombre de usuario o clave incorrecta</span></p>
-        </h3>
+        </div>
         {% endif %}
 
-    </form>
 </body>
 
 </html>

@@ -58,7 +58,7 @@
 
     #pie {
         height: 100px;
-        background-color: lavenderblush;
+        background-color: rgb(255, 252, 59);
     }
 
 
@@ -85,7 +85,7 @@
     #cuadroverde tr th {
 
         width: 50px;
-      
+
         border-collapse: collapse;
         padding: 4px;
     }
@@ -152,13 +152,14 @@
         top: 10px;
     }
 </style>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
-integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
 <body>
 
     <div id="cabecera">
         <table>
-            <tr id="rowcabecera">
+            <tr id="rowcabecera" >
                 <th id="th1">
 
                 </th>
@@ -166,9 +167,11 @@ integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ
                     <h1>Blog Personal de Rafael Suárez Franco en Flask</h1>
                 </th>
                 <th id="th3">
-                    <table class="card text-white bg-success mb-3" id="cuadroverde"><!--id="cuadroverde"-->
+                    <table class="card text-white bg-success mb-3" id="cuadroverde">
+                        <!--id="cuadroverde"-->
                         <tr>
-                            <th  ><!-- id="cuadroverdesuperior" class="cuadroverde2"-->
+                            <th>
+                                <!-- id="cuadroverdesuperior" class="cuadroverde2"-->
                                 <h3>Perfil:</h3>
                             </th>
                         </tr>
@@ -188,11 +191,11 @@ integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ
 
                                 {% if session["administrador"] == "SI" %}
                                 <form action="/logout" method="post">
-                                    <input  class="btn btn-outline-danger" type="submit" value="LOG OUT" />
+                                    <input class="btn btn-outline-danger" type="submit" value="LOG OUT" />
                                 </form>
                                 {% endif %}
                                 {% if session["administrador"] == "NO" %}
-                                <form  action="/login" method="post">
+                                <form action="/login" method="post">
                                     <input class="btn btn-outline-success" type="submit" value="LOG IN" />
                                 </form>
                                 {% endif %}
@@ -226,16 +229,23 @@ integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ
                 <td id="central">
                     <h1>Noticias</h1>
                     {% for noticia in noticias %}
-                    <div class="noticia">
-                        <div class="noticiatitular">
-                            <h2>{{ noticia.titulo }}</h2>
+
+
+                    <div class="card text-white bg-warning mb-3">
+                        <h4 class="card-header">{{ noticia.titulo }}</h4>
+                        <div class="card-body" style="background-color: rgb(248, 246, 114); color: black;">
+
+                            {{ noticia.cuerpo|safe }}
                         </div>
-                        <p>{{ noticia.cuerpo|safe }}</p>
                         {% if session["administrador"] == "SI" %}
-                        <span><a class="btn btn-primary" href="/editarnoticia?id={{ noticia.id }}">Modificar</a>
-                            <a class="btn btn-danger" href="/eliminarnoticia?id={{ noticia.id }}">Eliminar</a></span>
+                        <div style="padding-top: 10px; padding-left: 5px;">
+                            <span><a class="btn btn-primary" href="/editarnoticia?id={{ noticia.id }}">Modificar</a>
+                                <a class="btn btn-danger"
+                                    href="/eliminarnoticia?id={{ noticia.id }}">Eliminar</a></span>
+                        </div>
                         {% endif %}
                     </div>
+                    <br />
 
                     {% endfor %}
 
@@ -249,8 +259,7 @@ integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ
         </table>
     </div>
     <div id="pie">
-
-
+        
 
     </div>
 

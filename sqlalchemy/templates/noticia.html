@@ -23,14 +23,25 @@ integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ
         #pie {
             margin-top: 40px;
         }
+
+        #titular {
+            padding-left: 10px;
+        }
     </style>
 </head>
 
 <body>
-    <div id="titular">
-        <h1>{{ noticia.titulo }}</h1>
+    <br/>
+    <div class="card text-white bg-warning mb-3">
+        <div id="titular">
+            <h1>{{ noticia.titulo }}</h1>
+        </div>
+        <div class="card-body" style="background-color: rgb(248, 246, 114); color: black;">
+
+            {{ noticia.cuerpo|safe }}
+        </div>
+       
     </div>
-    <div id="central">{{ noticia.cuerpo|safe }}</div>
 
     <div  id="pie"><a class="btn btn-outline-dark" href="/">Volver a la página principal</a></div>
 </body>

@@ -47,7 +47,7 @@ def noticia():
 
 
 #entrar en la pg de login
-@app.route('/login', methods=["POST"])
+@app.route('/login', methods=["POST", "GET"])
 def login():
     error = "NO"
     return render_template("login.html" ,error=error)  
